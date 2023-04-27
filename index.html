@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo Firebase</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <div id="app">
+      <button id="button-login">Login con Google</button>
+      <button id="button-login" class="hidden">Cerrar sesion</button>
+
+      <form action="" id="todo-form">
+        <div id="user-info"></div>
+        <input
+          type="text"
+          id="todo-input"
+          placeholder="nuevo todo..."
+          autocomplete="off"
+        />
+        <div id="todos-container"></div>
+      </form>
+    </div>
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>
