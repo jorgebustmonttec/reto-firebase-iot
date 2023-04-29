@@ -2,6 +2,8 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-analytics.js";
+import {getDatabase, ref, get, set, child, update, remove}
+from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -20,9 +22,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-
-import {getDatabase, ref, set, child, update, remove}
-from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
+//initialize firebase database
 console.log("firebase-database.js loaded");
 const db = getDatabase();
 var namebox = document.getElementById("Namebox");
@@ -50,3 +50,58 @@ function InsertData(){
     alert("unsuccesful, error"+error);
   })
 }
+
+//Select Data from firebase
+
+function SelectData(){
+    const dbref = ref(db);
+
+    get(child(dbref,"Students/"+rollbox.value)).then((snapshot)=>{
+      if(snapshot.exists()){
+        namebox.value = snapshot.val().StudentName;
+        secbox.value = snapshot.val().StudentSection;
+        genbox.value = snapshot.val().StudentGender;
+      }
+      else{
+        alert("No data found");
+      }
+    })
+    .catch((error)=>{
+      alert("Unsuccesful,error "+error);
+    });
+}
+
+//Update Data from firebase
+
+function UpdateData(){
+    update(ref(db,"Students/"+rollbox.value),{
+        StudentName: namebox.value,
+        StudentSection: secbox.value,
+        StudentGender: genbox.value
+    
+      })
+      .then(()=>{
+        alert("Data Updated");
+      })
+      .catch((error)=>{
+        alert("unsuccesful, error"+error);
+      })
+    }
+
+//Delete Data from firebase
+
+function DeleteData(){
+    remove(ref(db,"Students/"+rollbox.value))
+      .then(()=>{
+        alert("Data removed");
+      })
+      .catch((error)=>{
+        alert("unsuccesful, error"+error);
+      })
+    }
+
+//assign event to button
+insbtn.addEventListener("click",InsertData);
+selbtn.addEventListener("click",SelectData);
+updbtn.addEventListener("click",UpdateData);
+delbtn.addEventListener("click",DeleteData);
