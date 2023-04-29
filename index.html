@@ -4,25 +4,26 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Todo Firebase</title>
-    <link rel="stylesheet" href="index.css" />
+    <title>firebase test</title>
+    <style>label{display: inline-block;width:80px}</style>
   </head>
   <body>
-    <div id="app">
-      <button id="button-login">Login con Google</button>
-      <button id="button-login" class="hidden">Cerrar sesion</button>
+    <label >Name</label> <input type="Namebox" type="text">
+    <label >RollNo</label> <input type="Rollbox" type="text">
+    <label >Section</label> <input type="Secbox" type="text">
+    <label >Name</label> 
+    <select id="Genbox">
+      <option value="Male">Male</option>
+      <option value="Female">Female</option>
+    </select>
+    <hr>
+    <button id="Insbtn">INSERT</button>
+    <button id="Selbtn">SELECT</button>
+    <button id="Updbtn">UPDATE</button>
+    <button id="Delbtn">DELETE</button>
 
-      <form action="" id="todo-form">
-        <div id="user-info"></div>
-        <input
-          type="text"
-          id="todo-input"
-          placeholder="nuevo todo..."
-          autocomplete="off"
-        />
-        <div id="todos-container"></div>
-      </form>
-    </div>
     <script src="/app.js" type="module"></script>
+
+    </script>
   </body>
 </html>
