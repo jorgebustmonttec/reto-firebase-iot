@@ -27,6 +27,8 @@ const analytics = getAnalytics(app);
 console.log("firebase-database.js loaded");
 const db = getDatabase();
 var onoffbtn=document.getElementById("estadoClimaBoton")
+var tempActualPag=document.getElementById("tempActualPag")
+var tempComfActual=document.getElementById("tempComfActual")
 
 
 //function to update on/off status of ac unit in the site
@@ -36,17 +38,39 @@ var onoffbtn=document.getElementById("estadoClimaBoton")
 //    else
 //    return false
 
+//update current temperature shown on site from firebase
+function updateTemp(){
+  const dbref = ref(db);
+
+  get(dbref).then((snapshot)=>{
+    if(snapshot.exists()){
+      tempActualPag.innerHTML = snapshot.val().tempactual;
+      console.log(snapshot.val().tempactual);
+    }
+    else{
+      alert("No data found");
+    }
+  })
+  .catch((error)=>{
+    alert("Unsuccesful,error "+error);
+  });
+
+}
+
 function getOnOffStatus(){
   const dbref = ref(db);
 
   get(dbref).then((snapshot)=>{
     if(snapshot.exists()){
+      tempComfActual.innerHTML = snapshot.val().TempComf;
       if(snapshot.val().onoffvalue){
         onoffbtn.innerHTML = "PRENDIDO";
-
+        updateTemp();
+        console.log(snapshot.val().tempactual);
       }
       else{
         onoffbtn.innerHTML = "APAGADO";
+        tempActualPag.innerHTML = "N/A";
       }
     }
     else{
@@ -58,9 +82,10 @@ function getOnOffStatus(){
   });
 }
 
-window.addEventListener('load', () => {
+document.addEventListener("DOMContentLoaded", function() {
   getOnOffStatus();
 });
+
 
 function changeOnOffStatus() {
   const dbRef = ref(db);
@@ -70,8 +95,10 @@ function changeOnOffStatus() {
   if (currentValue === "PRENDIDO") {
     newValue = "APAGADO";
     update(dbRef, { onoffvalue: false });
+    tempActualPag.innerHTML = "N/A";
   } else {
     newValue = "PRENDIDO";
+    updateTemp()
     update(dbRef, { onoffvalue: true });
   }
 
@@ -80,3 +107,17 @@ function changeOnOffStatus() {
 
 //make it so function runs on button click
 estadoClimaBoton.addEventListener("click",changeOnOffStatus);
+
+const slider = document.getElementById("sliderTemperatura");
+const sliderValue = document.querySelector(".slider-value");
+var actualizarTempComf = document.getElementById("actTempComf");
+
+//update tempcomf value from slider
+
+function changeTempComf() {
+  const dbRef = ref(db);
+  update(dbRef, { TempComf: slider.value });
+  tempComfActual.innerHTML = slider.value;
+}
+
+actualizarTempComf.addEventListener("click", changeTempComf);
