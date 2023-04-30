@@ -40,7 +40,8 @@ a{
   background-color: teal ;
   color: aliceblue;
   text-decoration: none;
-  width: 300px;
+  width: 320px;
+  border-bottom-right-radius: 30px;
 }
 
 .titulo{
@@ -48,6 +49,10 @@ a{
   font-size: 25px;
   font-weight: bold;
 margin: 0;
+}
+
+#tempCambio{
+  margin-bottom: 5px;
 }
 
 .hidden {
@@ -97,3 +102,32 @@ margin: 0;
   background: teal; /* Green background */
   cursor: pointer; /* Cursor on hover */
 }
+
+#infoEstatus{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 900px;
+  height: 130px;
+  background-color: teal;
+  color: aliceblue;
+  font-size: 20px;
+  font-weight: bold;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+#estadoClimaBoton{
+  background-color: aliceblue;
+  color: teal;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-top: 0;
+  font-weight: bold;
+}
+
+#estadoClimaBoton:active {
+  background-color: lightslategray;
+}
+

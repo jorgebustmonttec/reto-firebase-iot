@@ -10,13 +10,6 @@ from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-//   apiKey: "AIzaSyDS5AUQeq5SGVKwqHjXcMcNXXsGqHJE_5g",
-//   authDomain: "test-47f75.firebaseapp.com",
-//   projectId: "test-47f75",
-//   storageBucket: "test-47f75.appspot.com",
-//   messagingSenderId: "770601390412",
-//   appId: "1:770601390412:web:da789bf83989d697a1bfe9",
-//   measurementId: "G-MDC8J96GBM"
     apiKey: "AIzaSyD8J9exsuO12uO_1h2i1LUm5PmI_aO4ELc",
     authDomain: "reto-abe85.firebaseapp.com",
     databaseURL: "https://reto-abe85-default-rtdb.firebaseio.com",
@@ -33,83 +26,98 @@ const analytics = getAnalytics(app);
 //initialize firebase database
 console.log("firebase-database.js loaded");
 const db = getDatabase();
-var namebox = document.getElementById("Namebox");
-var rollbox = document.getElementById("Rollbox");
-var secbox = document.getElementById("Secbox");
-var genbox = document.getElementById("Genbox");
+var onoffbtn=document.getElementById("estadoClimaBoton")
+var tempActualPag=document.getElementById("tempActualPag")
+var tempComfActual=document.getElementById("tempComfActual")
 
-var insbtn = document.getElementById("Insbtn");
-var selbtn = document.getElementById("Selbtn");
-var updbtn = document.getElementById("Updbtn");
-var delbtn = document.getElementById("Delbtn");
-//Insert Data into firebase
-function InsertData(){
-  set(ref(db,"Students/"+rollbox.value),{
-    StudentName: namebox.value,
-    StudentRollNo: rollbox.value,
-    StudentSection: secbox.value,
-    StudentGender: genbox.value
 
-  })
-  .then(()=>{
-    alert("Data Inserted");
+//function to update on/off status of ac unit in the site
+//function getonoff
+//    if onoff is on
+//    return true
+//    else
+//    return false
+
+//update current temperature shown on site from firebase
+function updateTemp(){
+  const dbref = ref(db);
+
+  get(dbref).then((snapshot)=>{
+    if(snapshot.exists()){
+      tempActualPag.innerHTML = snapshot.val().tempactual;
+      console.log(snapshot.val().tempactual);
+    }
+    else{
+      alert("No data found");
+    }
   })
   .catch((error)=>{
-    alert("unsuccesful, error"+error);
-  })
+    alert("Unsuccesful,error "+error);
+  });
+
 }
 
-//Select Data from firebase
+function getOnOffStatus(){
+  const dbref = ref(db);
 
-function SelectData(){
-    const dbref = ref(db);
-
-    get(child(dbref,"Students/"+rollbox.value)).then((snapshot)=>{
-      if(snapshot.exists()){
-        namebox.value = snapshot.val().StudentName;
-        secbox.value = snapshot.val().StudentSection;
-        genbox.value = snapshot.val().StudentGender;
+  get(dbref).then((snapshot)=>{
+    if(snapshot.exists()){
+      tempComfActual.innerHTML = snapshot.val().TempComf;
+      if(snapshot.val().onoffvalue){
+        onoffbtn.innerHTML = "PRENDIDO";
+        updateTemp();
+        console.log(snapshot.val().tempactual);
       }
       else{
-        alert("No data found");
+        onoffbtn.innerHTML = "APAGADO";
+        tempActualPag.innerHTML = "N/A";
       }
-    })
-    .catch((error)=>{
-      alert("Unsuccesful,error "+error);
-    });
+    }
+    else{
+      alert("No data found");
+    }
+  })
+  .catch((error)=>{
+    alert("Unsuccesful,error "+error);
+  });
 }
 
-//Update Data from firebase
+document.addEventListener("DOMContentLoaded", function() {
+  getOnOffStatus();
+});
 
-function UpdateData(){
-    update(ref(db,"Students/"+rollbox.value),{
-        StudentName: namebox.value,
-        StudentSection: secbox.value,
-        StudentGender: genbox.value
-    
-      })
-      .then(()=>{
-        alert("Data Updated");
-      })
-      .catch((error)=>{
-        alert("unsuccesful, error"+error);
-      })
-    }
 
-//Delete Data from firebase
+function changeOnOffStatus() {
+  const dbRef = ref(db);
+  const currentValue = onoffbtn.innerHTML;
+  let newValue;
 
-function DeleteData(){
-    remove(ref(db,"Students/"+rollbox.value))
-      .then(()=>{
-        alert("Data removed");
-      })
-      .catch((error)=>{
-        alert("unsuccesful, error"+error);
-      })
-    }
+  if (currentValue === "PRENDIDO") {
+    newValue = "APAGADO";
+    update(dbRef, { onoffvalue: false });
+    tempActualPag.innerHTML = "N/A";
+  } else {
+    newValue = "PRENDIDO";
+    updateTemp()
+    update(dbRef, { onoffvalue: true });
+  }
 
-//assign event to button
-insbtn.addEventListener("click",InsertData);
-selbtn.addEventListener("click",SelectData);
-updbtn.addEventListener("click",UpdateData);
-delbtn.addEventListener("click",DeleteData);
+  onoffbtn.innerHTML = newValue;
+}
+
+//make it so function runs on button click
+estadoClimaBoton.addEventListener("click",changeOnOffStatus);
+
+const slider = document.getElementById("sliderTemperatura");
+const sliderValue = document.querySelector(".slider-value");
+var actualizarTempComf = document.getElementById("actTempComf");
+
+//update tempcomf value from slider
+
+function changeTempComf() {
+  const dbRef = ref(db);
+  update(dbRef, { TempComf: slider.value });
+  tempComfActual.innerHTML = slider.value;
+}
+
+actualizarTempComf.addEventListener("click", changeTempComf);
