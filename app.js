@@ -33,6 +33,8 @@ const analytics = getAnalytics(app);
 //initialize firebase database
 console.log("firebase-database.js loaded");
 const db = getDatabase();
+var onoffbtn=document.getElementById("estadoClimaBoton")
+
 var namebox = document.getElementById("Namebox");
 var rollbox = document.getElementById("Rollbox");
 var secbox = document.getElementById("Secbox");
@@ -58,6 +60,59 @@ function InsertData(){
     alert("unsuccesful, error"+error);
   })
 }
+
+//function to update on/off status of ac unit in the site
+//function getonoff
+//    if onoff is on
+//    return true
+//    else
+//    return false
+
+function getOnOffStatus(){
+  const dbref = ref(db);
+
+  get(dbref).then((snapshot)=>{
+    if(snapshot.exists()){
+      if(snapshot.val().onoffvalue){
+        onoffbtn.innerHTML = "PRENDIDO";
+
+      }
+      else{
+        onoffbtn.innerHTML = "APAGADO";
+      }
+    }
+    else{
+      alert("No data found");
+    }
+  })
+  .catch((error)=>{
+    alert("Unsuccesful,error "+error);
+  });
+}
+
+window.addEventListener('load', () => {
+  getOnOffStatus();
+});
+
+
+function changeOnOffStatus() {
+  const dbRef = ref(db);
+  const currentValue = onoffbtn.innerHTML;
+  let newValue;
+
+  if (currentValue === "PRENDIDO") {
+    newValue = "APAGADO";
+    update(dbRef, { onoffvalue: false });
+  } else {
+    newValue = "PRENDIDO";
+    update(dbRef, { onoffvalue: true });
+  }
+
+  onoffbtn.innerHTML = newValue;
+}
+
+//make it so function runs on button click
+estadoClimaBoton.addEventListener("click",changeOnOffStatus);
 
 //Select Data from firebase
 
@@ -113,3 +168,5 @@ insbtn.addEventListener("click",InsertData);
 selbtn.addEventListener("click",SelectData);
 updbtn.addEventListener("click",UpdateData);
 delbtn.addEventListener("click",DeleteData);
+
+
