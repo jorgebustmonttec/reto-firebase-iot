@@ -10,13 +10,21 @@ from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDS5AUQeq5SGVKwqHjXcMcNXXsGqHJE_5g",
-  authDomain: "test-47f75.firebaseapp.com",
-  projectId: "test-47f75",
-  storageBucket: "test-47f75.appspot.com",
-  messagingSenderId: "770601390412",
-  appId: "1:770601390412:web:da789bf83989d697a1bfe9",
-  measurementId: "G-MDC8J96GBM"
+//   apiKey: "AIzaSyDS5AUQeq5SGVKwqHjXcMcNXXsGqHJE_5g",
+//   authDomain: "test-47f75.firebaseapp.com",
+//   projectId: "test-47f75",
+//   storageBucket: "test-47f75.appspot.com",
+//   messagingSenderId: "770601390412",
+//   appId: "1:770601390412:web:da789bf83989d697a1bfe9",
+//   measurementId: "G-MDC8J96GBM"
+    apiKey: "AIzaSyD8J9exsuO12uO_1h2i1LUm5PmI_aO4ELc",
+    authDomain: "reto-abe85.firebaseapp.com",
+    databaseURL: "https://reto-abe85-default-rtdb.firebaseio.com",
+    projectId: "reto-abe85",
+    storageBucket: "reto-abe85.appspot.com",
+    messagingSenderId: "134245474037",
+    appId: "1:134245474037:web:28977d364c016333c82fbc",
+    measurementId: "G-NS0H62LFPZ"
 };
 
 // Initialize Firebase

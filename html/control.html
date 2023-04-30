@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>firebase test</title>
+    <link rel="stylesheet" href="/index.css" />
+    <style>
+      label {
+        display: inline-block;
+        width: 80px;
+      }
+      input,
+      select {
+        width: 120px;
+      }
+    </style>
+
+    <script src="/app.js" type="module"></script>
+    <script src="/sitefunctions.js" type="module"></script>
+  </head>
+
+  <body>
+    <div id="header">
+      <h1>Pagina de Control</h1>
+    </div>
+
+    <div id="hyperlinks">
+      <a href="index.html">Regresar</a> <a href="datos.html">Datos</a>
+    </div>
+    <br />
+    <div id="infoEstatus">
+      <div id="tempComfFirebase">
+        <p>Temperatura comfort actual:</p>
+        <p>21</p>
+      </div>
+      <div id="estatusFirebase">
+        <p>Estado:</p>
+        <p>APAGADO</p>
+      </div>
+    </div>
+
+    <div id="cambio de temperatura">
+      <p class="titulo">Cambiar temperatura de comfort</p>
+      <div class="slidecontainer">
+        <p>18</p>
+        <input
+          type="range"
+          min="18"
+          max="30"
+          value="21"
+          class="slider"
+          id="sliderTemperatura"
+        />
+        <p>30</p>
+      </div>
+      <div class="slider-value" id="tempCambio">21 grados celsius</div>
+      <button id="actTempComf">actualizar Temperatura Comfort</button>
+    </div>
+  </body>
+</html>
