@@ -131,3 +131,35 @@ margin: 0;
   background-color: lightslategray;
 }
 
+#myChart{
+  width: 900px;
+  height: 500px;
+  margin: 0 auto;
+  margin-top: 20px;
+  border-radius: 20px;
+  color: teal;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.chartContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.chart {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+.chart h4 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+  color: teal;
+}
+
+
