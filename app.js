@@ -2,7 +2,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-analytics.js";
-import {getDatabase, ref, get, set, child, update, remove}
+import {getDatabase, ref, get, set, child, update, remove, serverTimestamp}
 from "https://www.gstatic.com/firebasejs/9.21.0/firebase-database.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -121,3 +121,42 @@ function changeTempComf() {
 }
 
 actualizarTempComf.addEventListener("click", changeTempComf);
+
+
+//function to generate random id for new status with 8 characters
+
+function generateId() {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let id = '';
+  for (let i = 0; i < 16; i++) {
+    id += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return id;
+}
+
+var tempActual = document.getElementById("tempActual");
+var actTempbtn = document.getElementById("actTempActual");
+
+//insert new status with current temperature and timestamp to firebase
+
+function insertTemp() {
+  const id=generateId();
+  const time=serverTimestamp();
+  set(ref(db,"estatus/"+id), {
+    id: id,
+    temp: tempActual.value,
+    time: time
+  });
+  //log out data that was inserted
+  console.log("id: "+id);
+  console.log("temp: "+tempActual.value);
+  const dbref=ref(db);
+  get(child(dbref,"estatus/"+id)).then((snapshot)=>{
+    if(snapshot.exists()){
+      console.log(new Date(snapshot.val().time));
+    }
+  })
+}
+
+actTempbtn.addEventListener("click", insertTemp);
+
