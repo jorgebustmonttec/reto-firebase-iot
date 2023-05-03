@@ -16,7 +16,7 @@ button:active {
   background-color: lightseagreen;
 }
 
-#tempCambio{
+#tempCambio {
   font-size: 20px;
   color: teal;
   font-weight: bold;
@@ -32,26 +32,26 @@ button:active {
   padding: 10px;
 }
 
-a{
+a {
   color: aliceblue;
 }
 
 #hyperlinks {
-  background-color: teal ;
+  background-color: teal;
   color: aliceblue;
   text-decoration: none;
   width: 320px;
   border-bottom-right-radius: 30px;
 }
 
-.titulo{
+.titulo {
   color: teal;
   font-size: 25px;
   font-weight: bold;
-margin: 0;
+  margin: 0;
 }
 
-#tempCambio{
+#tempCambio {
   margin-bottom: 5px;
 }
 
@@ -60,25 +60,24 @@ margin: 0;
 }
 
 .slidecontainer {
-  display:flex;
+  display: flex;
   width: 500px; /* Width of the outside container */
   align-items: center;
   justify-content: center;
   font-size: 20px;
-  
 }
 
 /* The slider itself */
 .slider {
-  -webkit-appearance: none;  /* Override default CSS styles */
+  -webkit-appearance: none; /* Override default CSS styles */
   appearance: none;
   width: 100%; /* Full-width */
   height: 25px; /* Specified height */
   background: #d3d3d3; /* Grey background */
   outline: none; /* Remove outline */
   opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
-  transition: opacity .2s;
+  -webkit-transition: 0.2s; /* 0.2 seconds transition on hover */
+  transition: opacity 0.2s;
 }
 
 /* Mouse-over effects */
@@ -103,7 +102,7 @@ margin: 0;
   cursor: pointer; /* Cursor on hover */
 }
 
-#infoEstatus{
+#infoEstatus {
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -117,7 +116,7 @@ margin: 0;
   border-bottom-right-radius: 20px;
 }
 
-#estadoClimaBoton{
+#estadoClimaBoton {
   background-color: aliceblue;
   color: teal;
   border: none;
@@ -131,8 +130,8 @@ margin: 0;
   background-color: lightslategray;
 }
 
-#myChart{
-  width: 900px;
+#myChart {
+  width: 600px;
   height: 500px;
   margin: 0 auto;
   margin-top: 20px;
@@ -162,4 +161,91 @@ margin: 0;
   color: teal;
 }
 
+#dataContainer {
+  display: flex;
+  align-items: flex-start;
+}
+
+#onOffChart {
+  max-width: 600px;
+  margin: 20px;
+
+  border-radius: 10px;
+}
+
+#onOffChart h4 {
+  color: #008080;
+  margin-bottom: 10px;
+}
+
+#onOffTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#onOffTable th,
+#onOffTable td {
+  border: 1px solid #008080;
+  padding: 10px;
+  text-align: center;
+}
+
+#onOffTable th {
+  background-color: #008080;
+  color: #fff;
+}
+
+#onOffTable tbody tr:nth-child(even) {
+  background-color: #e6f2f2;
+}
+
+#onOffChart canvas {
+  background-color: #e6f2f2;
+}
+
+#onOffChart .chartjs-size-monitor,
+#onOffChart .chartjs-size-monitor-expand,
+#onOffChart .chartjs-size-monitor-shrink {
+  position: absolute;
+  direction: ltr;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  pointer-events: none;
+  visibility: hidden;
+  z-index: -1;
+}
+
+#onOffChart .chartjs-size-monitor-expand > div,
+#onOffChart .chartjs-size-monitor-shrink > div {
+  position: absolute;
+  width: 1000000px;
+  height: 1000000px;
+  left: 0;
+  top: 0;
+}
+
+#onOffData{
+  display:flex;
+  color: #008080;
+}
+#EnergiaUsada{
+  background-color: #008080;
+  margin-top: 20px;
+  font-size: 30px;
+  margin-left: 20px;
+  color: aliceblue;
+  width: 275px;
+  text-align: center;
+  height: 530px;
+  border-radius: 20px;
+}
+
+#energiaUsadaKw{
+font-size: 35px;
+
+font-weight: bold;
+}
 

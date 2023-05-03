@@ -28,10 +28,36 @@
     <div id="hyperlinks">
       <a href="index.html">Regresar</a> <a href="control.html">Control</a>
     </div>
-    <div class="chartContainer">
-      <div class="chart">
-        <h4>Temperature Chart</h4>
-        <canvas id="myChart"></canvas>
+    <div id="dataContainer">
+      <div class="chartContainer">
+        <div class="chart">
+          <h4>Grafico de temperatura</h4>
+          <canvas id="myChart"></canvas>
+        </div>
+      </div>
+
+      <div id="onOffData">
+        <div id="onOffChart">
+          <h4>Tabla de encendido</h4>
+          <table id="onOffTable">
+            <thead>
+              <tr>
+                <th>Fecha/hora</th>
+                <th>Evento</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <div id="EnergiaUsada">
+          <h4>Energia usada</h4>
+          <p id="energiaUsadaKw"></p>
+          <h4>Tiempo Prendido Total</h4>
+          <p id="TiempoPrendido"></p>
+          <h4>Precio Estimado</h4>
+          <p id="precioEstimado"></p>
+        </div>
       </div>
     </div>
   </body>
