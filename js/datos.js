@@ -155,6 +155,25 @@ getAllDataOnce().then(({ tempLista, timeLista }) => {
 
   getOnOffData().then(({ onOffLista, timeOnOffLista }) => {
     //log out both arrays
+    var enerGastTime = 0;
+    var enerGast = 0;
+    var i = 0;
+    while (i < onOffLista.length)
+    {
+      console.log(onOffLista[i]);
+      console.log(timeOnOffLista[i]);
+      if (onOffLista[i] === "ON" || onOffLista[i+1] === "OFF")
+      {
+        enerGastTime += (timeOnOffLista[i+1] - timeOnOffLista[i])
+      }
+    }
+    enerGast = (0.00000977*enerGastTime);
+    console.log(onOffLista);
+    console.log(timeOnOffLista);
+    console.log(enerGast);
+    //close loop
+  }).catch((error) => {
+    console.log("Error: " + error);
     console.log(onOffLista);
     console.log(timeOnOffLista);
     //close loop
