@@ -53,6 +53,8 @@ const db = getDatabase();
       time: time
     });
     update(dbRef, { tempactual: tempActual.value });
+
+    
   
     // Log the data that was inserted to the console
     console.log("id: "+id);
