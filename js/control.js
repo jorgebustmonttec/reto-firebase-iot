@@ -135,9 +135,10 @@ function changeOnOffStatus() {
   // Function to update the comfort temperature value in Firebase when the slider is changed
   function changeTempComf() {
     const dbRef = ref(db);
-    update(dbRef, { TempComf: slider.value });
+    update(dbRef, { TempComf: parseInt(slider.value) }); // use parseInt() to convert slider.value to an integer
     tempComfActual.innerHTML = slider.value;
   }
+  
   
   // Run the changeTempComf function when the "Actualizar" button is clicked
   actualizarTempComf.addEventListener("click", changeTempComf);

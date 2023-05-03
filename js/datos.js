@@ -52,7 +52,7 @@ function getAllDataOnce() {
           snapshot.forEach((childSnapshot) => {
             data.push({
               temp: childSnapshot.val().temp,
-              time: new Date(childSnapshot.val().time),
+              time: new Date((childSnapshot.val().time*1000)),
             });
           });
           // Sort the data array by time
@@ -70,6 +70,10 @@ function getAllDataOnce() {
   
 
 getAllDataOnce().then(({ tempLista, timeLista }) => {
+  console.log(tempLista);
+  for(var i = 0; i < timeLista.length; i++){
+    console.log(timeLista[i]);
+  }
     // Create chart data
     const chartData = {
       labels: timeLista,
@@ -136,7 +140,7 @@ getAllDataOnce().then(({ tempLista, timeLista }) => {
           snapshot.forEach((childSnapshot) => {
             data.push({
               onOff: childSnapshot.val().onoffnow,
-              time: childSnapshot.val().time,
+              time: (childSnapshot.val().time*1000),
             });
           });
           // Sort the data array by time
@@ -154,10 +158,57 @@ getAllDataOnce().then(({ tempLista, timeLista }) => {
   
 
   getOnOffData().then(({ onOffLista, timeOnOffLista }) => {
-    //log out both arrays
+    for(var i = 0; i < timeOnOffLista.length; i++){
+      console.log(new Date(timeOnOffLista[i]));
+    }
+    var enerGastTime = 0;
+    var enerGast = 0;
+    var i = 0;
+    var lastOffIndex = -1;
+    while (i < onOffLista.length) {
+      if (onOffLista[i] === "Off") {
+        lastOffIndex = i;
+      } else if (onOffLista[i] === "On" && lastOffIndex !== -1) {
+        // find the earliest "On" after the last "Off"
+        var j = i;
+        while (j < onOffLista.length && onOffLista[j] === "On") {
+          j++;
+        }
+        enerGastTime += timeOnOffLista[j - 1] - timeOnOffLista[lastOffIndex];
+        lastOffIndex = -1;
+        i = j - 1;
+      }
+      i++;
+    }
+    enerGast = 0.67 * (enerGastTime/3600000);
+    
+
     console.log(onOffLista);
     console.log(timeOnOffLista);
-    //close loop
+    console.log(enerGast);
+    console.log(enerGastTime/1000);
+
+    document.getElementById("energiaUsadaKw").innerHTML = enerGast.toFixed(2) + " kW";
+    document.getElementById("TiempoPrendido").innerHTML = ((enerGastTime/1000) /60 ).toFixed(1) + " minutos";
+
+
+    for (let i = 0; i < timeOnOffLista.length; i++) {
+      // create a new row for each event
+      const newRow = onOffTable.insertRow();
+  
+      // format the date and time
+      const date = new Date(timeOnOffLista[i]);
+      const formattedDate = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+      const formattedTime = `${date.getHours()}:${date.getMinutes().toString().padStart(2, '0')}`;
+  
+      // set the cell values for the new row
+      const dateCell = newRow.insertCell();
+      const eventCell = newRow.insertCell();
+      dateCell.innerHTML = `${formattedDate} ${formattedTime}`;
+      eventCell.innerHTML = onOffLista[i];
+    }
+    document.getElementById("precioEstimado").innerHTML = "$" + (enerGast * 0.839).toFixed(2);
+    
   }).catch((error) => {
     console.log("Error: " + error);
   });
