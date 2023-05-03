@@ -29,6 +29,8 @@ const dbRef = ref(db);
 
 var tempLista = [];
 var timeLista = [];
+var onOffLista = [];
+var timeOnOffLista = [];
 
 const options = { 
     year: 'numeric', 
@@ -120,6 +122,42 @@ getAllDataOnce().then(({ tempLista, timeLista }) => {
       data: chartData,
       options: chartOptions,
     });
+  }).catch((error) => {
+    console.log("Error: " + error);
+  });
+
+  function getOnOffData() {
+    const onOffRef = child(dbRef, "onofflog");
+  
+    return new Promise((resolve, reject) => {
+      get(onOffRef)
+        .then((snapshot) => {
+          const data = [];
+          snapshot.forEach((childSnapshot) => {
+            data.push({
+              onOff: childSnapshot.val().onoffnow,
+              time: childSnapshot.val().time,
+            });
+          });
+          // Sort the data array by time
+          data.sort((a, b) => a.time - b.time);
+          // Extract the sorted onOff and time arrays
+          const onOffLista = data.map((item) => item.onOff);
+          const timeOnOffLista = data.map((item) => item.time);
+          resolve({ onOffLista, timeOnOffLista });
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+  
+
+  getOnOffData().then(({ onOffLista, timeOnOffLista }) => {
+    //log out both arrays
+    console.log(onOffLista);
+    console.log(timeOnOffLista);
+    //close loop
   }).catch((error) => {
     console.log("Error: " + error);
   });
