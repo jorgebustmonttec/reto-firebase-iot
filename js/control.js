@@ -80,21 +80,44 @@ function getOnOffStatus() {
   document.addEventListener("DOMContentLoaded", function() {
     getOnOffStatus();
   });
+
+    // Function to generate a random 16-character ID for new status entries
+    function generateId() {
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let id = '';
+      for (let i = 0; i < 16; i++) {
+        id += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+      return id;
+    }
  // Function to change the on/off status of the climate control system
 function changeOnOffStatus() {
     const dbRef = ref(db);
     const currentValue = onoffbtn.innerHTML;
     let newValue;
+    const id = generateId();
+    const time = serverTimestamp();
   
     // Check if the system is currently on or off and toggle the status accordingly
     if (currentValue === "PRENDIDO") {
       newValue = "APAGADO";
       update(dbRef, { onoffvalue: false });
       tempActualPag.innerHTML = "N/A";
+      set(ref(db,"onofflog/"+id), {
+        id: id,
+        onoffnow: "OFF",
+        time: time
+      });
     } else {
       newValue = "PRENDIDO";
       updateTemp()
       update(dbRef, { onoffvalue: true });
+      set(ref(db,"onofflog/"+id), {
+        id: id,
+        onoffnow: "ON",
+        time: time
+      });
+      
     }
   
     // Update the UI with the new status
